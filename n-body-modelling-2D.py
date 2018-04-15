@@ -1,7 +1,10 @@
 # Import requirements
+import pandas as pd
 import numpy as np
 from scipy import integrate
 import matplotlib.pyplot as plt
+
+pd.set_option('display.width', 1000)
 
 
 class Body:
@@ -128,9 +131,9 @@ def plot_orbits(orbit_paths):
 if __name__ == '__main__':
 
     # Set up bodies
-    body1 = Body(x=1, vx=0, y=0, vy=0, mass=1, name='Body 1')
-    body2 = Body(x=0, vx=0.1, y=0, vy=1, mass=1, name='Body 2')
-    body3 = Body(x=-1, vx=0, y=0, vy=0, mass=1, name='Body 3')
+    body1 = Body(x=50, vx=0, y=0, vy=10, mass=1, name='Light 1')
+    body2 = Body(x=-50, vx=0, y=0, vy=-10, mass=1, name='Light 2')
+    body3 = Body(x=-0, vx=0, y=0, vy=0, mass=3000, name='Massive 1')
 
     bodies = [body1, body2, body3]
 
@@ -138,8 +141,26 @@ if __name__ == '__main__':
     orbits = calc_orbits(bodies=bodies,
                          n_body_func=n_body_func,
                          t0=0,
-                         t1=10,
+                         t1=211,
                          dt=1000)
 
     print("\nPlotting orbits...")
-    plot_orbits(orbit_paths=orbits)
+    #plot_orbits(orbit_paths=orbits)
+
+    # Put orbits array in pandas DataFrame
+    orbitsDf = pd.DataFrame(orbits)
+
+    # Add column names
+    for i in range(len(bodies)):
+
+        body_name = bodies[i].name
+
+        orbitsDf.rename(columns={i*4: body_name + '_x',
+                                i*4 + 1: body_name + '_vx',
+                                i*4 + 2: body_name + '_y',
+                                i*4 + 3: body_name + '_vy'},
+                        inplace=True)
+
+    # Let's write orbits DataFrame to a csv
+    orbitsDf.to_csv("orbits_2light_1massive.csv")
+
