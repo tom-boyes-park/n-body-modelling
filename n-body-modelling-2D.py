@@ -19,6 +19,11 @@ class Body:
 
 
 def set_initial(bodies):
+    """
+
+    :param bodies: List of Body classes
+    :return: list of starting x, y, vx, and vy values for each Body in bodies
+    """
     initial = []
 
     # Loop through bodies and create initial conditions to be passed into the integrator
@@ -30,6 +35,15 @@ def set_initial(bodies):
 
 
 def n_body_func(t, pos_vel_array, bodies):
+    """
+
+    Function to be passed into the ode integrator. Tracks the changes in spatial and velocity values.
+
+    :param t: time step
+    :param pos_vel_array: array containing x, y, vx and vy values for each body
+    :param bodies: list of Body classes
+    :return: array containing change in spatial and velocity values for each body
+    """
 
     # pos_vel_array = [body1_x, body1_vx, body1_y, body1_vy, body2_x, ...]
 
@@ -77,7 +91,6 @@ def n_body_func(t, pos_vel_array, bodies):
 
 
 def calc_orbits(bodies, n_body_func, t0, t1, dt):
-    
     """
     
     :param bodies: List of Body classes that describe the starting conditions and masses of the bodies
@@ -88,7 +101,7 @@ def calc_orbits(bodies, n_body_func, t0, t1, dt):
     :param dt: Time step (seconds)
     :return: Array containing spatial coordinates and velocities of bodies at each time step
     """
-    
+
     # Initial conditions (x, vx, y, vy)
     initial = set_initial(bodies=bodies)
 
@@ -102,9 +115,11 @@ def calc_orbits(bodies, n_body_func, t0, t1, dt):
     y[0, :] = initial
 
     # Setup integrator
-    integrator = integrate.ode(n_body_func) \
+    integrator = integrate \
+        .ode(n_body_func) \
         .set_integrator('dop853', rtol=1e-6, atol=1e-10) \
-        .set_initial_value(initial, t0).set_f_params(bodies)
+        .set_initial_value(initial, t0) \
+        .set_f_params(bodies)
 
     # Iterate over time intervals and integrate, storing updated spatial coordinates and velocities of bodies
     for i in range(1, len(t)):
@@ -114,6 +129,11 @@ def calc_orbits(bodies, n_body_func, t0, t1, dt):
 
 
 def plot_orbits(orbit_paths):
+    """
+
+    :param orbit_paths: array containing spatial and velocity values over time
+    :return:
+    """
 
     plt.figure(figsize=(15, 10))
 
@@ -126,6 +146,13 @@ def plot_orbits(orbit_paths):
 
 
 def store_orbits(bodies, orbit_paths, file_name):
+    """
+
+    :param bodies: List of Body classes
+    :param orbit_paths: array containing spatial and velocity values over time
+    :param file_name: name of csv file that will store orbit path data
+    :return:
+    """
 
     # Put orbits array in pandas DataFrame
     orbits_df = pd.DataFrame(orbit_paths)
@@ -135,7 +162,7 @@ def store_orbits(bodies, orbit_paths, file_name):
         body_name = bodies[i].name
 
         rename_spec = {
-            i * 4:     body_name + '_x',
+            i * 4: body_name + '_x',
             i * 4 + 1: body_name + '_vx',
             i * 4 + 2: body_name + '_y',
             i * 4 + 3: body_name + '_vy'
@@ -147,7 +174,6 @@ def store_orbits(bodies, orbit_paths, file_name):
 
 
 if __name__ == '__main__':
-
     # Set up bodies
     body1 = Body(x=50, vx=0, y=0, vy=10, mass=1, name='Light 1')
     body2 = Body(x=-50, vx=0, y=0, vy=-10, mass=1, name='Light 2')
