@@ -214,12 +214,12 @@ def store_orbits(bodies, orbit_paths, file_name):
 
         orbits_df.rename(columns=rename_spec, inplace=True)
 
-    orbits_df.to_csv("{}.csv".format(file_name), index=None)
+    orbits_df.to_csv("src/data/{}.csv".format(file_name), index=None)
 
 
 if __name__ == '__main__':
 
-    bodies = load_bodies("config.json")
+    bodies = load_bodies("src/resources/config.json")
 
     print("\nCalculating orbits")
     orbits = calc_orbits(bodies=bodies, n_body_func=n_body_func, t0=0, t1=211, dt=1000)
