@@ -143,7 +143,7 @@ def store_orbits(bodies, orbit_paths, file_name):
 
         orbits_df.rename(columns=rename_spec, inplace=True)
 
-    orbits_df.to_csv("{}.csv".format(file_name))
+    orbits_df.to_csv("{}.csv".format(file_name), index=None)
 
 
 if __name__ == '__main__':
