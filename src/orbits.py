@@ -1,65 +1,8 @@
-# Import requirements
-import json
+# import requirements
 import pandas as pd
 import numpy as np
 from scipy import integrate
 import matplotlib.pyplot as plt
-
-pd.set_option('display.width', 1000)
-
-
-class Body:
-
-    def __init__(self, x, vx, y, vy, mass, name):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.mass = mass
-        self.name = name
-
-
-def load_config(config_path):
-    with open(config_path, "r") as f:
-        return json.load(f)
-
-
-def load_body(b):
-    """
-
-    :param b: dict representation of body from config
-    :return: Body with values set from b
-    """
-    required_keys = ["x", "y", "vx", "vy", "mass", "name"]
-    for key in required_keys:
-        if key not in b:
-            raise Exception("'{}' value missing, unable to load body".format(key))
-
-    x, y = b["x"], b["y"]
-    vx, vy = b["vx"], b["vy"]
-    name = b["name"]
-    mass = b["mass"]
-
-    print("Loaded Body: {}".format(name))
-
-    return Body(x, y, vx, vy, mass, name)
-
-
-def load_bodies(config_path):
-    """
-
-    :param config_path: path to config containing body parameters
-    :return: list of Body classes with values set from config
-    """
-
-    config = load_config(config_path)
-
-    bodies = []
-    for b in config:
-        body = load_body(b)
-        bodies.append(body)
-
-    return bodies
 
 
 def set_initial(bodies):
@@ -134,11 +77,10 @@ def n_body_func(t, pos_vel_array, bodies):
     return dpos_vel_array
 
 
-def calc_orbits(bodies, n_body_func, t0, t1, dt):
+def calc_orbits(bodies, t0, t1, dt):
     """
-    
+
     :param bodies: List of Body classes that describe the starting conditions and masses of the bodies
-    :param n_body_func: Function passed into the integrator used to update the spatial coordinates and velocities of the
     bodies due to the gravitational forces from other bodies at each time step
     :param t0: Start time
     :param t1: End time
@@ -166,6 +108,7 @@ def calc_orbits(bodies, n_body_func, t0, t1, dt):
         .set_f_params(bodies)
 
     # Iterate over time intervals and integrate, storing updated spatial coordinates and velocities of bodies
+    print("Calculating orbits")
     for i in range(1, len(t)):
         y[i, :] = integrator.integrate(t[i])
 
@@ -215,16 +158,3 @@ def store_orbits(bodies, orbit_paths, file_name):
         orbits_df.rename(columns=rename_spec, inplace=True)
 
     orbits_df.to_csv("src/data/{}.csv".format(file_name), index=None)
-
-
-if __name__ == '__main__':
-
-    bodies = load_bodies("src/resources/config.json")
-
-    print("\nCalculating orbits")
-    orbits = calc_orbits(bodies=bodies, n_body_func=n_body_func, t0=0, t1=211, dt=1000)
-
-    print("\nPlotting orbits")
-    plot_orbits(orbit_paths=orbits)
-
-    store_orbits(bodies=bodies, orbit_paths=orbits, file_name="orbits_2light_1massive")
