@@ -1,4 +1,5 @@
 # Import requirements
+import json
 import pandas as pd
 import numpy as np
 from scipy import integrate
@@ -16,6 +17,49 @@ class Body:
         self.vy = vy
         self.mass = mass
         self.name = name
+
+
+def load_config(config_path):
+    with open(config_path, "r") as f:
+        return json.load(f)
+
+
+def load_body(b):
+    """
+
+    :param b: dict representation of body from config
+    :return: Body with values set from b
+    """
+    required_keys = ["x", "y", "vx", "vy", "mass", "name"]
+    for key in required_keys:
+        if key not in b:
+            raise Exception("'{}' value missing, unable to load body".format(key))
+
+    x, y = b["x"], b["y"]
+    vx, vy = b["vx"], b["vy"]
+    name = b["name"]
+    mass = b["mass"]
+
+    print("Loaded Body: {}".format(name))
+
+    return Body(x, y, vx, vy, mass, name)
+
+
+def load_bodies(config_path):
+    """
+
+    :param config_path: path to config containing body parameters
+    :return: list of Body classes with values set from config
+    """
+
+    config = load_config(config_path)
+
+    bodies = []
+    for b in config:
+        body = load_body(b)
+        bodies.append(body)
+
+    return bodies
 
 
 def set_initial(bodies):
@@ -174,16 +218,13 @@ def store_orbits(bodies, orbit_paths, file_name):
 
 
 if __name__ == '__main__':
-    # Set up bodies
-    body1 = Body(x=50, vx=0, y=0, vy=10, mass=1, name='Light 1')
-    body2 = Body(x=-50, vx=0, y=0, vy=-10, mass=1, name='Light 2')
-    body3 = Body(x=-0, vx=0, y=0, vy=0, mass=3000, name='Massive 1')
-    bodies = [body1, body2, body3]
 
-    print("\nCalculating orbits...")
+    bodies = load_bodies("config.json")
+
+    print("\nCalculating orbits")
     orbits = calc_orbits(bodies=bodies, n_body_func=n_body_func, t0=0, t1=211, dt=1000)
 
-    print("\nPlotting orbits...")
+    print("\nPlotting orbits")
     plot_orbits(orbit_paths=orbits)
 
     store_orbits(bodies=bodies, orbit_paths=orbits, file_name="orbits_2light_1massive")
