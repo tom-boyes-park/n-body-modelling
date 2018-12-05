@@ -115,19 +115,23 @@ def calc_orbits(bodies, t0, t1, dt):
     return y
 
 
-def plot_orbits(orbit_paths):
+def plot_orbits(orbit_paths, fig_name=None):
     """
 
     :param orbit_paths: array containing spatial and velocity values over time
+    :param fig_name: if string provided, png of plot will be saved as name given
     :return:
     """
 
-    plt.figure(figsize=(15, 10))
+    plt.figure(figsize=(15, 15))
+
+    print(orbit_paths[:, 6])
 
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
 
-    plt.show()
+    if fig_name is not None:
+        plt.savefig("src/plots/{}.png".format(fig_name))
 
     return
 

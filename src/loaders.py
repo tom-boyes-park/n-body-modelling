@@ -35,7 +35,7 @@ def load_body(b):
 
     print("Loaded Body: {}".format(name))
 
-    return Body(x, y, vx, vy, mass, name)
+    return Body(x, vx, y, vy, mass, name)
 
 
 def load_bodies(config_path):
