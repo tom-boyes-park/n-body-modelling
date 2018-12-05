@@ -8,16 +8,18 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
 ## Example Orbits
 <table>
   <tr>
+    <td>2 Light 1 Massive</td>
+    <td>3 Equal Mass Periodic</td>
+    <td>Chaos</td>
+  </tr>
+  <tr>
     <td>
-      2 Light 1 Massive
       <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/orbits_2light_1massive.png">
     </td>
     <td>
-      3 Equal Mass Periodic
       <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_equal_mass_periodic.png">
     </td>
     <td>
-      Chaos
       <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_body_chaos.png">
     </td>
   </tr>
