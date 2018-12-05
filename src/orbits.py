@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from scipy import integrate
 import matplotlib.pyplot as plt
+import os
 
 
 def set_initial(bodies):
@@ -158,5 +159,8 @@ def store_orbits(bodies, orbit_paths, file_name):
         }
 
         orbits_df.rename(columns=rename_spec, inplace=True)
+
+    if not os.path.isdir("src/data"):
+        os.mkdir("src/data")
 
     orbits_df.to_csv("src/data/{}.csv".format(file_name), index=None)
