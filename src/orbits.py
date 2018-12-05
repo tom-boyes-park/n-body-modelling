@@ -125,8 +125,6 @@ def plot_orbits(orbit_paths, fig_name=None):
 
     plt.figure(figsize=(15, 15))
 
-    print(orbit_paths[:, 6])
-
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
 
