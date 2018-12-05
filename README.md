@@ -5,6 +5,26 @@ The code in this repository allows you to experiment with different initial star
 
 The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html) in order to calculate the change in x, y, v<sub>x</sub> and v<sub>y</sub> at a given time step due to the gravitational forces of all other bodies in the system. The integrator used is ````dopri835````.
 
+## Example Orbits
+<table>
+  <tr>
+    <td>
+      2 Light 1 Massive
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/orbits_2light_1massive.png">
+    </td>
+    <td>
+      3 Equal Mass Periodic
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_equal_mass_periodic.png">
+    </td>
+    <td>
+      Chaos
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_body_chaos.png">
+    </td>
+  </tr>
+</table>
+
+Intial starting conditions for the periodic orbits of 3 bodies with equal mass originally taken from http://three-body.ipb.ac.rs/.
+
 ## How To Use
 <ul>
   <li>Clone this repository</li>
