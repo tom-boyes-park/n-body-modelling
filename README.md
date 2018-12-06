@@ -41,7 +41,7 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
   </tr>
 </table>
 
-[1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.
+[1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: <i>M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.</i>
 
 ## How To Use
 <ul>
