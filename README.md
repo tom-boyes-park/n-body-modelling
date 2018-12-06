@@ -8,24 +8,36 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
 ## Example Orbits
 <table>
   <tr>
-    <td>2 Light 1 Massive</td>
-    <td>3 Equal Mass Periodic</td>
     <td>Chaos</td>
+    <td>2 Light 1 Massive</td>
+    <td>Broucke A 2 [1]</td>
   </tr>
   <tr>
+    <td>
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_body_chaos.png">
+    </td>
     <td>
       <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/orbits_2light_1massive.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_equal_mass_periodic.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/Broucke_A_2.png">
+    </td>
+  </tr>
+  <tr>
+    <td>YIN-YANG 2b [1]</td>
+    <td>BUTTERFLY IV [1]</td>
+  </tr>
+  <tr>
+    <td>
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/YIN-YANG 2b.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_body_chaos.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/BUTTERFLY IV.png">
     </td>
   </tr>
 </table>
 
-Intial starting conditions for the periodic orbits of 3 bodies with equal mass originally taken from http://three-body.ipb.ac.rs/.
+[1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.
 
 ## How To Use
 <ul>
