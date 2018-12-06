@@ -26,6 +26,7 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
   <tr>
     <td>YIN-YANG 2b [1]</td>
     <td>BUTTERFLY IV [1]</td>
+    <td>II.15.A [1]</td>
   </tr>
   <tr>
     <td>
@@ -33,6 +34,9 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
     </td>
     <td>
       <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/BUTTERFLY IV.png">
+    </td>
+    <td>
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/II.15.A.png">
     </td>
   </tr>
 </table>
