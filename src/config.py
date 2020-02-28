@@ -1,3 +1,14 @@
+"""
+This file contains the default starting conditions required in order to produce
+the plots stored under 'src/plots'.
+
+The starting conditions for:
+    - YING_YANG_2B
+
+were taken from: http://three-body.ipb.ac.rs/. Paper: M. Šuvakov and V. Dmitrašinović,
+Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110,
+114301 (2013). arXiv:1303.0181.
+"""
 from typing import List
 
 from loaders import Body
