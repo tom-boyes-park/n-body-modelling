@@ -41,6 +41,12 @@ class DefaultConditions(Enum):
         ),
     ]
 
+    BUTTERFLY_IV = [
+        Body(x=-1, y=0, vx=0.350112, vy=0.079339, mass=1, name="Body 1"),
+        Body(x=1, y=0, vx=0.350112, vy=0.079339, mass=1, name="Body 1"),
+        Body(x=0, y=0, vx=-2 * 0.350112, vy=-2 * 0.079339, mass=1, name="Body 1"),
+    ]
+
     TWO_LIGHT_ONE_MASSIVE = [
         Body(x=-50, y=0, vx=0, vy=-10, mass=50, name="Light Body 1"),
         Body(x=0, y=0, vx=0, vy=0, mass=3000, name="Massive Body"),
