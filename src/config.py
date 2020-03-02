@@ -14,6 +14,33 @@ from enum import Enum
 
 
 class DefaultConditions(Enum):
+    BROUCKE_A_2 = [
+        Body(
+            x=0.3361300950,
+            y=0.0000000000,
+            vx=0.0000000000,
+            vy=1.5324315370,
+            mass=1,
+            name="Body 1",
+        ),
+        Body(
+            x=0.7699893804,
+            y=0.0000000000,
+            vx=0.0000000000,
+            vy=-0.6287350978,
+            mass=1,
+            name="Body 2",
+        ),
+        Body(
+            x=-1.1061194753,
+            y=0.0000000000,
+            vx=0.0000000000,
+            vy=-0.9036964391,
+            mass=1,
+            name="Body 3",
+        ),
+    ]
+
     TWO_LIGHT_ONE_MASSIVE = [
         Body(x=-50, y=0, vx=0, vy=-10, mass=50, name="Light Body 1"),
         Body(x=0, y=0, vx=0, vy=0, mass=3000, name="Massive Body"),
