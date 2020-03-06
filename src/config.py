@@ -5,6 +5,7 @@ the plots stored under 'src/plots'.
 The starting conditions for:
     - BROUCKE_A_2
     - BUTTERFLY_IV
+    - DRAGONFLY_II_15_A
     - YING_YANG_2B
 
 were taken from: http://three-body.ipb.ac.rs/. Paper: M. Šuvakov and V. Dmitrašinović,
