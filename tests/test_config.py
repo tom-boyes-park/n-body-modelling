@@ -2,8 +2,8 @@ from typing import List
 
 import pytest
 
-from src.config import DefaultConditions
-from src.loaders import Body
+from n_body_modelling.config import DefaultConditions
+from n_body_modelling.loaders import Body
 
 
 @pytest.mark.parametrize(

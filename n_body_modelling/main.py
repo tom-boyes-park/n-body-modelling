@@ -1,5 +1,5 @@
-from config import DefaultConditions
-from orbits import calc_orbits, plot_orbits, store_orbits
+from n_body_modelling.config import DefaultConditions
+from n_body_modelling.orbits import calc_orbits, plot_orbits, store_orbits
 
 
 if __name__ == "__main__":
