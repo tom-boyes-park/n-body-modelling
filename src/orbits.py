@@ -133,34 +133,3 @@ def plot_orbits(orbit_paths, fig_name=None):
         plt.savefig("src/plots/{}.png".format(fig_name))
 
     return
-
-
-def store_orbits(bodies, orbit_paths, file_name):
-    """
-
-    :param bodies: List of Body classes
-    :param orbit_paths: array containing spatial and velocity values over time
-    :param file_name: name of csv file that will store orbit path data
-    :return:
-    """
-
-    # Put orbits array in pandas DataFrame
-    orbits_df = pd.DataFrame(orbit_paths)
-
-    # Add column names
-    for i in range(len(bodies)):
-        body_name = bodies[i].name
-
-        rename_spec = {
-            i * 4: body_name + '_x',
-            i * 4 + 1: body_name + '_vx',
-            i * 4 + 2: body_name + '_y',
-            i * 4 + 3: body_name + '_vy'
-        }
-
-        orbits_df.rename(columns=rename_spec, inplace=True)
-
-    if not os.path.isdir("src/data"):
-        os.mkdir("src/data")
-
-    orbits_df.to_csv("src/data/{}.csv".format(file_name), index=None)
