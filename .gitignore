@@ -1,3 +1,4 @@
 *.ipynb
 *.pyc
 *.csv
+/tests/.pytest_cache/
