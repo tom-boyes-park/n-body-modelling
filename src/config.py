@@ -12,8 +12,9 @@ were taken from: http://three-body.ipb.ac.rs/. Paper: M. ≈†uvakov and V. Dmitra≈
 Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110,
 114301 (2013). arXiv:1303.0181.
 """
-from loaders import Body
 from enum import Enum
+
+from src.loaders import Body
 
 
 class DefaultConditions(Enum):
