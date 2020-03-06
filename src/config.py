@@ -14,7 +14,7 @@ Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 1
 """
 from enum import Enum
 
-from n_body_modelling.loaders import Body
+from src.loaders import Body
 
 
 class DefaultConditions(Enum):
