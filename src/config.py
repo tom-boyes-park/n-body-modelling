@@ -16,7 +16,6 @@ from enum import Enum
 
 
 class Body:
-
     def __init__(self, x, vx, y, vy, mass, name):
         self.x = x
         self.y = y
