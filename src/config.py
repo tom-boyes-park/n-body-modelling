@@ -14,7 +14,16 @@ Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 1
 """
 from enum import Enum
 
-from src.loaders import Body
+
+class Body:
+
+    def __init__(self, x, vx, y, vy, mass, name):
+        self.x = x
+        self.y = y
+        self.vx = vx
+        self.vy = vy
+        self.mass = mass
+        self.name = name
 
 
 class DefaultConditions(Enum):

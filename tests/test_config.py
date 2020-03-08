@@ -2,8 +2,7 @@ from typing import List
 
 import pytest
 
-from src.config import DefaultConditions
-from src.loaders import Body
+from src.config import Body, DefaultConditions
 
 
 @pytest.mark.parametrize(
