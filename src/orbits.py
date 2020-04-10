@@ -1,12 +1,18 @@
 # import requirements
-import pandas as pd
+from typing import List
+
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy import integrate
-import matplotlib.pyplot as plt
-import os
+
+import logging
+
+from src.config import Body
+
+logger = logging.getLogger(__name__)
 
 
-def set_initial(bodies):
+def set_initial(bodies: List[Body]) -> List[List[int]]:
     """
 
     :param bodies: List of Body classes
@@ -16,6 +22,7 @@ def set_initial(bodies):
 
     # Loop through bodies and create initial conditions to be passed into the integrator
     for body in bodies:
+        logger.info(f"Setting intial conditions for: {body.name}")
         values = [body.x, body.vx, body.y, body.vy]
         initial += values
 
@@ -81,12 +88,14 @@ def n_body_func(t, pos_vel_array, bodies):
 def calc_orbits(bodies, t0, t1, dt):
     """
 
-    :param bodies: List of Body classes that describe the starting conditions and masses of the bodies
+    :param bodies: List of Body classes that describe the starting conditions and
+        masses of the bodies
     bodies due to the gravitational forces from other bodies at each time step
     :param t0: Start time
     :param t1: End time
     :param dt: Time step (seconds)
-    :return: Array containing spatial coordinates and velocities of bodies at each time step
+    :return: Array containing spatial coordinates and velocities of bodies at each
+        time step
     """
 
     # Initial conditions (x, vx, y, vy)
@@ -108,8 +117,9 @@ def calc_orbits(bodies, t0, t1, dt):
         .set_initial_value(initial, t0) \
         .set_f_params(bodies)
 
-    # Iterate over time intervals and integrate, storing updated spatial coordinates and velocities of bodies
-    print("Calculating orbits")
+    # Iterate over time intervals and integrate, storing updated spatial coordinates
+    # and velocities of bodies
+    logger.info("Calculating orbits")
     for i in range(1, len(t)):
         y[i, :] = integrator.integrate(t[i])
 
