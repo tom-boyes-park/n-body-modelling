@@ -1,24 +1,35 @@
-from typing import List
+from typing import List, Type
 
 import pytest
+from _pytest.compat import nullcontext
 
-from src.config import Body, DefaultConditions
-
-
-@pytest.mark.parametrize(
-    ids=[c.name for c in DefaultConditions],
-    argnames="conditions",
-    argvalues=[c.value for c in DefaultConditions],
-)
-def test_default_conditions_are_lists(conditions: List[Body]):
-    assert isinstance(conditions, list)
+from src.config import Body, Orbit
 
 
 @pytest.mark.parametrize(
-    ids=[c.name for c in DefaultConditions],
-    argnames="conditions",
-    argvalues=[c.value for c in DefaultConditions],
+    argnames=["name", "bodies", "t", "exception"],
+    argvalues=[
+        (
+            "VALID_ORBIT",
+            [
+                Body(x=0, vx=0, y=0, vy=0, mass=1, name="body_1"),
+                Body(x=1, vx=1, y=1, vy=1, mass=1, name="body_2"),
+            ],
+            10,
+            None,
+        ),
+        ("INVALID_ORBIT", [], 10, ValueError),
+        (
+            "INVALID_ORBIT",
+            [Body(x=0, vx=0, y=0, vy=0, mass=1, name="body_1")],
+            10,
+            ValueError,
+        ),
+    ],
 )
-def test_default_conditions_are_lists_of_bodies(conditions: List[Body]):
-    for body in conditions:
-        assert isinstance(body, Body)
+def test_orbit_constructor(
+    name: str, bodies: List[Body], t: int, exception: Type[BaseException]
+):
+    """ Tests that Orbit constructor raises ValueError if not enough bodies supplied """
+    with pytest.raises(exception) if exception else nullcontext():
+        Orbit(name=name, bodies=bodies, t=t)

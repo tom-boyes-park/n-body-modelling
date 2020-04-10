@@ -49,8 +49,12 @@ def n_body_func(t, pos_vel_array, bodies):
     G = 1
 
     # Change in x, y is velocity in x, y
-    dpos_vel_array[0:len(dpos_vel_array):4] = pos_vel_array[1:len(pos_vel_array):4]
-    dpos_vel_array[2:len(dpos_vel_array):4] = pos_vel_array[3:len(pos_vel_array):4]
+    dpos_vel_array[0 : len(dpos_vel_array) : 4] = pos_vel_array[
+        1 : len(pos_vel_array) : 4
+    ]
+    dpos_vel_array[2 : len(dpos_vel_array) : 4] = pos_vel_array[
+        3 : len(pos_vel_array) : 4
+    ]
 
     # Loop through bodies, calculating change in vx, vy due to all other bodies
     for i, body in enumerate(bodies):
@@ -72,11 +76,18 @@ def n_body_func(t, pos_vel_array, bodies):
                 mass_other_body = other_body.mass
 
                 # Distance
-                r = ((x_pos_body - x_pos_other_body) ** 2 + (y_pos_body - y_pos_other_body) ** 2) ** 0.5
+                r = (
+                    (x_pos_body - x_pos_other_body) ** 2
+                    + (y_pos_body - y_pos_other_body) ** 2
+                ) ** 0.5
 
                 # Change in vx, vy
-                dx_vel_body += (-G * mass_other_body * (x_pos_body - x_pos_other_body)) * r ** (-3)
-                dy_vel_body += (-G * mass_other_body * (y_pos_body - y_pos_other_body)) * r ** (-3)
+                dx_vel_body += (
+                    -G * mass_other_body * (x_pos_body - x_pos_other_body)
+                ) * r ** (-3)
+                dy_vel_body += (
+                    -G * mass_other_body * (y_pos_body - y_pos_other_body)
+                ) * r ** (-3)
 
         # Add resultant change in vel to array
         dpos_vel_array[i * 4 + 1] = dx_vel_body
@@ -111,11 +122,12 @@ def calc_orbits(bodies, t0, t1, dt):
     y[0, :] = initial
 
     # Setup integrator
-    integrator = integrate \
-        .ode(n_body_func) \
-        .set_integrator('dop853', rtol=1e-6, atol=1e-10) \
-        .set_initial_value(initial, t0) \
+    integrator = (
+        integrate.ode(n_body_func)
+        .set_integrator("dop853", rtol=1e-6, atol=1e-10)
+        .set_initial_value(initial, t0)
         .set_f_params(bodies)
+    )
 
     # Iterate over time intervals and integrate, storing updated spatial coordinates
     # and velocities of bodies
