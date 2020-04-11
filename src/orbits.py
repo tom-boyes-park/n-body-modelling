@@ -1,4 +1,3 @@
-# import requirements
 from typing import List
 
 import matplotlib.pyplot as plt
@@ -11,8 +10,11 @@ from src.config import Body
 
 logger = logging.getLogger(__name__)
 
+# Arbitrary value for G (gravitational constant)
+G = 1
 
-def set_initial(bodies: List[Body]) -> List[List[int]]:
+
+def create_initial_conditions(bodies: List[Body]) -> List[int]:
     """
 
     :param bodies: List of Body classes
@@ -21,12 +23,37 @@ def set_initial(bodies: List[Body]) -> List[List[int]]:
     initial = []
 
     # Loop through bodies and create initial conditions to be passed into the integrator
+    logger.info(f"Creating initial conditions for the {len(bodies)} bodies")
     for body in bodies:
-        logger.info(f"Setting intial conditions for: {body.name}")
         values = [body.x, body.vx, body.y, body.vy]
         initial += values
 
     return initial
+
+
+def calc_2d_distance(x1: float, y1: float, x2: float, y2: float) -> float:
+    """
+    Returns:
+        Distance between the 2-dimensional co-ordinates supplied.
+    """
+    return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
+
+
+def calc_dvel(c1: float, c2: float, r: float, m2: float) -> float:
+    """
+    Calculates the change in velocity on a target body due to the gravitational force
+    of another body (source body) in a single dimension.
+
+    Args:
+        c1: value for target body position in x or y dimension
+        c2: value for source body position in x or y dimension
+        r: distance between 2 bodies
+        m2: mass of the source body
+
+    Returns:
+        change in target body velocity (float)
+    """
+    return (-G * m2 * (c1 - c2)) * r ** (-3)
 
 
 def n_body_func(t, pos_vel_array, bodies):
@@ -43,22 +70,18 @@ def n_body_func(t, pos_vel_array, bodies):
     # pos_vel_array = [body1_x, body1_vx, body1_y, body1_vy, body2_x, ...]
 
     # Set up array to store updated spatial and velocity values
-    dpos_vel_array = np.zeros(4 * len(bodies))
-
-    # Arbitrary value for G (gravitational constant)
-    G = 1
+    dpos_dvel_array = np.zeros(4 * len(bodies))
 
     # Change in x, y is velocity in x, y
-    dpos_vel_array[0 : len(dpos_vel_array) : 4] = pos_vel_array[
+    dpos_dvel_array[0 : len(dpos_dvel_array) : 4] = pos_vel_array[
         1 : len(pos_vel_array) : 4
     ]
-    dpos_vel_array[2 : len(dpos_vel_array) : 4] = pos_vel_array[
+    dpos_dvel_array[2 : len(dpos_dvel_array) : 4] = pos_vel_array[
         3 : len(pos_vel_array) : 4
     ]
 
     # Loop through bodies, calculating change in vx, vy due to all other bodies
     for i, body in enumerate(bodies):
-
         # Extract x, y values of body
         x_pos_body = pos_vel_array[i * 4]
         y_pos_body = pos_vel_array[i * 4 + 2]
@@ -67,33 +90,33 @@ def n_body_func(t, pos_vel_array, bodies):
         dy_vel_body = 0
 
         for j, other_body in enumerate(bodies):
-
             # Check bodies aren't the same
             if i != j:
                 # Extract x, y & mass of other body
                 x_pos_other_body = pos_vel_array[j * 4]
                 y_pos_other_body = pos_vel_array[j * 4 + 2]
-                mass_other_body = other_body.mass
 
-                # Distance
-                r = (
-                    (x_pos_body - x_pos_other_body) ** 2
-                    + (y_pos_body - y_pos_other_body) ** 2
-                ) ** 0.5
+                # Distance to other body
+                r = calc_2d_distance(
+                    x1=x_pos_body,
+                    y1=y_pos_body,
+                    x2=x_pos_other_body,
+                    y2=y_pos_other_body,
+                )
 
-                # Change in vx, vy
-                dx_vel_body += (
-                    -G * mass_other_body * (x_pos_body - x_pos_other_body)
-                ) * r ** (-3)
-                dy_vel_body += (
-                    -G * mass_other_body * (y_pos_body - y_pos_other_body)
-                ) * r ** (-3)
+                # Change in x, y
+                dx_vel_body += calc_dvel(
+                    c1=x_pos_body, c2=x_pos_other_body, r=r, m2=other_body.mass
+                )
+                dy_vel_body += calc_dvel(
+                    c1=y_pos_body, c2=y_pos_other_body, r=r, m2=other_body.mass
+                )
 
         # Add resultant change in vel to array
-        dpos_vel_array[i * 4 + 1] = dx_vel_body
-        dpos_vel_array[i * 4 + 3] = dy_vel_body
+        dpos_dvel_array[i * 4 + 1] = dx_vel_body
+        dpos_dvel_array[i * 4 + 3] = dy_vel_body
 
-    return dpos_vel_array
+    return dpos_dvel_array
 
 
 def calc_orbits(bodies, t0, t1, dt):
@@ -110,15 +133,13 @@ def calc_orbits(bodies, t0, t1, dt):
     """
 
     # Initial conditions (x, vx, y, vy)
-    initial = set_initial(bodies=bodies)
+    initial = create_initial_conditions(bodies=bodies)
 
     # Time period over which to calculate orbit paths
     t = np.linspace(t0, t1, dt)
 
     # Array for solution
     y = np.zeros((len(t), len(bodies) * 4))
-
-    # Initial value of array
     y[0, :] = initial
 
     # Setup integrator
