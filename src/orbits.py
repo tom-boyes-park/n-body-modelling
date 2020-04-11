@@ -58,14 +58,17 @@ def calc_dvel(c1: float, c2: float, r: float, m2: float) -> float:
 
 def n_body_func(t, pos_vel, bodies: List[Body]):
     """
+    Function to be passed into the ode integrator. Calculates and stores the changes
+    in spatial and velocity values.
 
-    Function to be passed into the ode integrator. Tracks the changes in spatial and velocity values.
+    Args:
+        t: time step
+        pos_vel: array containing x, y, vx and vy values for each body
+            [x1, vx1, y1, vy1, x2, ...]
+        bodies: list of Body objects
 
-    :param t: time step
-    :param pos_vel: array containing x, y, vx and vy values for each body
-        [x1, vx1, y1, vy1, x2, ...]
-    :param bodies: list of Body classes
-    :return: array containing change in spatial and velocity values for each body
+    Returns:
+        array containing change in spatial and velocity values for each body
     """
     # Set up array to store updated spatial and velocity values
     dpos_dvel = np.zeros(4 * len(bodies))
