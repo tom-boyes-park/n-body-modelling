@@ -56,67 +56,51 @@ def calc_dvel(c1: float, c2: float, r: float, m2: float) -> float:
     return (-G * m2 * (c1 - c2)) * r ** (-3)
 
 
-def n_body_func(t, pos_vel_array, bodies):
+def n_body_func(t, pos_vel, bodies: List[Body]):
     """
 
     Function to be passed into the ode integrator. Tracks the changes in spatial and velocity values.
 
     :param t: time step
-    :param pos_vel_array: array containing x, y, vx and vy values for each body
+    :param pos_vel: array containing x, y, vx and vy values for each body
+        [x1, vx1, y1, vy1, x2, ...]
     :param bodies: list of Body classes
     :return: array containing change in spatial and velocity values for each body
     """
-
-    # pos_vel_array = [body1_x, body1_vx, body1_y, body1_vy, body2_x, ...]
-
     # Set up array to store updated spatial and velocity values
-    dpos_dvel_array = np.zeros(4 * len(bodies))
+    dpos_dvel = np.zeros(4 * len(bodies))
 
     # Change in x, y is velocity in x, y
-    dpos_dvel_array[0 : len(dpos_dvel_array) : 4] = pos_vel_array[
-        1 : len(pos_vel_array) : 4
-    ]
-    dpos_dvel_array[2 : len(dpos_dvel_array) : 4] = pos_vel_array[
-        3 : len(pos_vel_array) : 4
-    ]
+    dpos_dvel[0 : len(dpos_dvel) : 4] = pos_vel[1 : len(pos_vel) : 4]
+    dpos_dvel[2 : len(dpos_dvel) : 4] = pos_vel[3 : len(pos_vel) : 4]
 
     # Loop through bodies, calculating change in vx, vy due to all other bodies
     for i, body in enumerate(bodies):
         # Extract x, y values of body
-        x_pos_body = pos_vel_array[i * 4]
-        y_pos_body = pos_vel_array[i * 4 + 2]
+        x1 = pos_vel[i * 4]
+        y1 = pos_vel[i * 4 + 2]
 
-        dx_vel_body = 0
-        dy_vel_body = 0
-
+        vx1 = 0
+        vy1 = 0
         for j, other_body in enumerate(bodies):
             # Check bodies aren't the same
             if i != j:
                 # Extract x, y & mass of other body
-                x_pos_other_body = pos_vel_array[j * 4]
-                y_pos_other_body = pos_vel_array[j * 4 + 2]
+                x2 = pos_vel[j * 4]
+                y2 = pos_vel[j * 4 + 2]
 
                 # Distance to other body
-                r = calc_2d_distance(
-                    x1=x_pos_body,
-                    y1=y_pos_body,
-                    x2=x_pos_other_body,
-                    y2=y_pos_other_body,
-                )
+                r = calc_2d_distance(x1=x1, y1=y1, x2=x2, y2=y2,)
 
                 # Change in x, y
-                dx_vel_body += calc_dvel(
-                    c1=x_pos_body, c2=x_pos_other_body, r=r, m2=other_body.mass
-                )
-                dy_vel_body += calc_dvel(
-                    c1=y_pos_body, c2=y_pos_other_body, r=r, m2=other_body.mass
-                )
+                vx1 += calc_dvel(c1=x1, c2=x2, r=r, m2=other_body.mass)
+                vy1 += calc_dvel(c1=y1, c2=y2, r=r, m2=other_body.mass)
 
         # Add resultant change in vel to array
-        dpos_dvel_array[i * 4 + 1] = dx_vel_body
-        dpos_dvel_array[i * 4 + 3] = dy_vel_body
+        dpos_dvel[i * 4 + 1] = vx1
+        dpos_dvel[i * 4 + 3] = vy1
 
-    return dpos_dvel_array
+    return dpos_dvel
 
 
 def calc_orbits(bodies, t0, t1, dt):
