@@ -2,6 +2,7 @@ from typing import List
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.animation import FuncAnimation
 from scipy import integrate
 
 import logging
@@ -146,7 +147,7 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     return y
 
 
-def plot_orbits(orbit_paths: np.ndarray, fig_name=None):
+def plot_orbits(orbit_paths: np.ndarray):
     """
 
     :param orbit_paths: array containing spatial and velocity values over time
@@ -154,14 +155,33 @@ def plot_orbits(orbit_paths: np.ndarray, fig_name=None):
     :return:
     """
 
-    plt.figure(figsize=(10, 10))
+    logger.info("Plotting orbits")
+    fig = plt.figure(figsize=(10, 10))
+    ax = plt.axes(xlim=(-2, 2), ylim=(-2, 2))
 
-    for i in range(int(orbit_paths.shape[1] / 4)):
-        plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
+    lines = []
+    for index in range(int(orbit_paths.shape[1] / 4)):
+        lobj = ax.plot([], [], lw=1)[0]
+        lines.append(lobj)
+
+    def init():
+        for line in lines:
+            line.set_data([], [])
+        return lines
+
+    def animate(i):
+        for j, line in enumerate(lines):
+            if i > 20:
+                x = orbit_paths[i - 20:i, j * 4]
+                y = orbit_paths[i - 20:i, j * 4 + 2]
+            else:
+                x = orbit_paths[:i, j * 4]
+                y = orbit_paths[:i, j * 4 + 2]
+            line.set_data(x, y)
+
+        return lines
+
+    anim = FuncAnimation(fig, animate, init_func=init, frames=orbit_paths.shape[0],
+                         interval=1, blit=True)
 
     plt.show()
-
-    if fig_name is not None:
-        plt.savefig("src/plots/{}.png".format(fig_name))
-
-    return
