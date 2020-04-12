@@ -106,7 +106,7 @@ def n_body_func(t: int, pos_vel: np.ndarray, bodies: List[Body]) -> np.ndarray:
     return dpos_dvel
 
 
-def calc_orbits(bodies: list[Body], t0: int, t1: int, dt: int) -> np.ndarray:
+def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     """
 
     :param bodies: List of Body classes that describe the starting conditions and
