@@ -44,24 +44,17 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
 [1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: <i>M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.</i>
 
 ## How To Use
-<ul>
-  <li>Clone this repository.</li>
-  <li>Edit config.json specifying the starting conditions and masses of the bodies. Each body is described by a dictionary which must follow the structure below.</li>
-</ul>
+Clone this repository.
+```commandline
+git clone https://github.com/TBoyesPark23/n-body-modelling.git
+```
 
-````
-{
-  "name:" "body_name",
-  "x": 0,
-  "y": 0,
-  "vx": 1,
-  "vy": 1,
-  "mass: "10
-}
-````
-<ul>
-  <li>In calc_orbits() in main.py set the desired end time, <strong>t1</strong>, and number of time steps, <strong>dt</strong>, for the orbit calculations.</li>
-  <li>If you want a .png file saved of the orbits, the <strong>file_name</strong> parameter must be set in plot_orbits(). </li>
-  <li>Run main.py.</li>
-  <li>Spatial coordinates and velocities of bodies at each time step will be stored in a .csv file inside src/data.</li>
-</ul>
+Plot orbits for one of the default orbit configurations:
+```commandline
+python src/main.py --orbit TWO_LIGHT_ONE_MASSIVE
+```
+
+List available orbit configurations that can be plotted:
+```commandline
+python src/main.py --list-orbits
+```
