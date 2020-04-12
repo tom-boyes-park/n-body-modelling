@@ -159,6 +159,8 @@ def plot_orbits(orbit_paths: np.ndarray, fig_name=None):
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
 
+    plt.show()
+
     if fig_name is not None:
         plt.savefig("src/plots/{}.png".format(fig_name))
 
