@@ -56,7 +56,7 @@ def calc_dvel(c1: float, c2: float, r: float, m2: float) -> float:
     return (-G * m2 * (c1 - c2)) * r ** (-3)
 
 
-def n_body_func(t, pos_vel, bodies: List[Body]):
+def n_body_func(t: int, pos_vel: np.ndarray, bodies: List[Body]) -> np.ndarray:
     """
     Function to be passed into the ode integrator. Calculates and stores the changes
     in spatial and velocity values.
@@ -106,7 +106,7 @@ def n_body_func(t, pos_vel, bodies: List[Body]):
     return dpos_dvel
 
 
-def calc_orbits(bodies, t0, t1, dt):
+def calc_orbits(bodies: list[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     """
 
     :param bodies: List of Body classes that describe the starting conditions and
@@ -146,7 +146,7 @@ def calc_orbits(bodies, t0, t1, dt):
     return y
 
 
-def plot_orbits(orbit_paths, fig_name=None):
+def plot_orbits(orbit_paths: np.ndarray, fig_name=None):
     """
 
     :param orbit_paths: array containing spatial and velocity values over time
