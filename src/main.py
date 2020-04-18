@@ -9,7 +9,7 @@ from src.config import (
     TWO_LIGHT_ONE_MASSIVE,
     Orbit,
 )
-from src.orbits import calc_orbits, plot_orbits
+from src.orbits import calc_orbits, animate_orbits
 
 DEFAULT_ORBITS = {
     o.name: o
@@ -80,8 +80,8 @@ def run():
     parser = initialise_parser()
     orbit = parse_and_validate_args(args=parser.parse_args())
 
-    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=5000)
-    plot_orbits(orbit_paths=orbits)
+    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=1000)
+    animate_orbits(orbit_paths=orbits)
 
 
 if __name__ == "__main__":

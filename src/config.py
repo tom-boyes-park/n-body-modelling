@@ -41,6 +41,7 @@ class Orbit:
             self.bodies = bodies
 
 
+# TODO: set dt in the Orbit configuration also
 BROUCKE_A_2 = Orbit(
     name="BROUCKE_A_2",
     bodies=[
@@ -78,7 +79,7 @@ TWO_LIGHT_ONE_MASSIVE = Orbit(
         Body(x=0, y=0, vx=0, vy=0, mass=3000, name="Massive Body"),
         Body(x=50, y=0, vx=0, vy=10, mass=50, name="Light Body 2"),
     ],
-    t=50,
+    t=250,
 )
 
 YING_YANG_2B = Orbit(

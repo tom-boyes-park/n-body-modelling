@@ -147,21 +147,33 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     return y
 
 
-def plot_orbits(orbit_paths: np.ndarray):
+def animate_orbits(orbit_paths: np.ndarray):
     """
-
-    :param orbit_paths: array containing spatial and velocity values over time
-    :param fig_name: if string provided, png of plot will be saved as name given
-    :return:
+    Args:
+        orbit_paths: array containing spatial and velocity values over time
     """
+    logger.info("Animating orbits")
+    fig = plt.figure(figsize=(7.5, 7.5))
 
-    logger.info("Plotting orbits")
-    fig = plt.figure(figsize=(10, 10))
-    ax = plt.axes(xlim=(-2, 2), ylim=(-2, 2))
+    # set size of axis based on max/min spatial values
+    x_min = orbit_paths[:, 0::4].min() * 1.1
+    x_max = orbit_paths[:, 0::4].max() * 1.1
+    y_min = orbit_paths[:, 2::4].min() * 1.1
+    y_max = orbit_paths[:, 2::4].max() * 1.1
+    ax = plt.axes(xlim=(x_min, x_max), ylim=(y_min, y_max))
 
+    n_bodies = int(orbit_paths.shape[1] / 4)
+
+    colours = ["red", "blue", "orange", "green", "black"]
     lines = []
-    for index in range(int(orbit_paths.shape[1] / 4)):
-        lobj = ax.plot([], [], lw=1)[0]
+    # TODO: sort out color for the body circles
+    for index in range(n_bodies * 2):
+        if index < n_bodies:
+            lobj = ax.plot([], [], "--", lw=1, color=colours[index % len(colours)])[0]
+        else:
+            lobj = ax.plot(
+                [], [], "o", color=colours[(index - n_bodies) % len(colours)]
+            )[0]
         lines.append(lobj)
 
     def init():
@@ -171,17 +183,46 @@ def plot_orbits(orbit_paths: np.ndarray):
 
     def animate(i):
         for j, line in enumerate(lines):
-            if i > 20:
-                x = orbit_paths[i - 20:i, j * 4]
-                y = orbit_paths[i - 20:i, j * 4 + 2]
+            if j < n_bodies:
+                orbit_tail_length = 30
+                if i > orbit_tail_length:
+                    x = orbit_paths[i - orbit_tail_length : i, j * 4]
+                    y = orbit_paths[i - orbit_tail_length : i, j * 4 + 2]
+                else:
+                    x = orbit_paths[:i, j * 4]
+                    y = orbit_paths[:i, j * 4 + 2]
             else:
-                x = orbit_paths[:i, j * 4]
-                y = orbit_paths[:i, j * 4 + 2]
+                x = orbit_paths[i, (j - n_bodies) * 4]
+                y = orbit_paths[i, (j - n_bodies) * 4 + 2]
+                logger.info(f"Setting circular head, line_{j}: ({x}, {y})")
+
             line.set_data(x, y)
 
         return lines
 
-    anim = FuncAnimation(fig, animate, init_func=init, frames=orbit_paths.shape[0],
-                         interval=1, blit=True)
+    # TODO: ensure a consistent maximum number of frames so animations aren't too slow
+    #       or too fast
+    anim = FuncAnimation(
+        fig, animate, init_func=init, frames=orbit_paths.shape[0], interval=1, blit=True
+    )
+    plt.show()
+
+
+def plot_orbits(orbit_paths: np.ndarray, fig_name: str = None):
+    """
+
+    :param orbit_paths: array containing spatial and velocity values over time
+    :param fig_name: if string provided, png of plot will be saved as name given
+    :return:
+    """
+
+    logger.info("Plotting orbits")
+    plt.figure(figsize=(10, 10))
+
+    for i in range(int(orbit_paths.shape[1] / 4)):
+        plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
 
     plt.show()
+
+    if fig_name is not None:
+        plt.savefig("src/plots/{}.png".format(fig_name))
