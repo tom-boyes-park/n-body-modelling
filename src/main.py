@@ -22,6 +22,8 @@ DEFAULT_ORBITS = {
     ]
 }
 
+logger = logging.getLogger(__name__)
+
 
 def initialise_logger():
     logging.basicConfig(
@@ -46,7 +48,7 @@ def initialise_parser() -> argparse.ArgumentParser:
     return parser
 
 
-def parse_and_validate_args(args: argparse.Namespace) -> Orbit:
+def validate_args(args: argparse.Namespace):
     """
     Parse the arguments supplied via the command line.
 
@@ -57,8 +59,6 @@ def parse_and_validate_args(args: argparse.Namespace) -> Orbit:
     Args:
         args: command line arguments
 
-    Returns:
-        Orbit corresponding to value specified for --orbit
     """
     if args.list_orbits:
         print("Available default orbit names:\n")
@@ -72,14 +72,16 @@ def parse_and_validate_args(args: argparse.Namespace) -> Orbit:
 
     if orbit not in DEFAULT_ORBITS.keys():
         raise ValueError(f"'{orbit}' not recognised")
-
-    return DEFAULT_ORBITS[orbit]
+    else:
+        logger.info(f"Orbit selected:\n{DEFAULT_ORBITS[orbit].ascii_name}\n")
 
 
 def run():
     parser = initialise_parser()
-    orbit = parse_and_validate_args(args=parser.parse_args())
+    args = parser.parse_args()
+    validate_args(args=args)
 
+    orbit = DEFAULT_ORBITS[args.orbit]
     orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=1000)
     animate_orbits(orbit_paths=orbits)
 

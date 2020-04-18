@@ -194,7 +194,6 @@ def animate_orbits(orbit_paths: np.ndarray):
             else:
                 x = orbit_paths[i, (j - n_bodies) * 4]
                 y = orbit_paths[i, (j - n_bodies) * 4 + 2]
-                logger.info(f"Setting circular head, line_{j}: ({x}, {y})")
 
             line.set_data(x, y)
 
