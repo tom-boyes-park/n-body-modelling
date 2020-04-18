@@ -9,7 +9,7 @@ from src.config import (
     TWO_LIGHT_ONE_MASSIVE,
     Orbit,
 )
-from src.orbits import calc_orbits, plot_orbits
+from src.orbits import calc_orbits, animate_orbits, plot_orbits
 
 DEFAULT_ORBITS = {
     o.name: o
@@ -21,6 +21,8 @@ DEFAULT_ORBITS = {
         YING_YANG_2B,
     ]
 }
+
+logger = logging.getLogger(__name__)
 
 
 def initialise_logger():
@@ -42,11 +44,18 @@ def initialise_parser() -> argparse.ArgumentParser:
         help="lists available orbit names that can be used",
         action="store_true",
     )
+    parser.add_argument(
+        "--animate", help="Animate the orbit paths", action="store_true"
+    )
 
     return parser
 
 
-def parse_and_validate_args(args: argparse.Namespace) -> Orbit:
+def _list_orbits():
+    logger.info(f"Valid orbit names: {list(DEFAULT_ORBITS.keys())}")
+
+
+def validate_args(args: argparse.Namespace):
     """
     Parse the arguments supplied via the command line.
 
@@ -57,31 +66,35 @@ def parse_and_validate_args(args: argparse.Namespace) -> Orbit:
     Args:
         args: command line arguments
 
-    Returns:
-        Orbit corresponding to value specified for --orbit
     """
-    if args.list_orbits:
-        print("Available default orbit names:\n")
-        for orbit_name in DEFAULT_ORBITS.keys():
-            print(f"{orbit_name}")
-        exit(0)
-
     orbit = args.orbit
     if not orbit:
         raise ValueError("Orbit name must be specified")
 
+    # check name of orbit supplied is recognised
     if orbit not in DEFAULT_ORBITS.keys():
-        raise ValueError(f"'{orbit}' not recognised")
-
-    return DEFAULT_ORBITS[orbit]
+        _list_orbits()
+        raise ValueError(f"Orbit '{orbit}' not recognised")
+    else:
+        logger.info(f"Orbit selected:\n{DEFAULT_ORBITS[orbit].ascii_name}\n")
 
 
 def run():
     parser = initialise_parser()
-    orbit = parse_and_validate_args(args=parser.parse_args())
+    args = parser.parse_args()
+    validate_args(args=args)
 
-    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=5000)
-    plot_orbits(orbit_paths=orbits)
+    if args.list_orbits:
+        _list_orbits()
+        exit(0)
+
+    orbit = DEFAULT_ORBITS[args.orbit]
+    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=1000)
+
+    if args.animate:
+        animate_orbits(orbits)
+    else:
+        plot_orbits(orbits)
 
 
 if __name__ == "__main__":
