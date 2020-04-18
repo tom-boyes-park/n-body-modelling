@@ -153,7 +153,7 @@ def animate_orbits(orbit_paths: np.ndarray):
         orbit_paths: array containing spatial and velocity values over time
     """
     logger.info("Animating orbits")
-    fig = plt.figure(figsize=(7.5, 7.5))
+    fig = plt.figure(figsize=(6, 6))
 
     # set size of axis based on max/min spatial values
     x_min = orbit_paths[:, 0::4].min() * 1.1
@@ -166,7 +166,6 @@ def animate_orbits(orbit_paths: np.ndarray):
 
     colours = ["red", "blue", "orange", "green", "black"]
     lines = []
-    # TODO: sort out color for the body circles
     for index in range(n_bodies * 2):
         if index < n_bodies:
             lobj = ax.plot([], [], "--", lw=1, color=colours[index % len(colours)])[0]
@@ -214,9 +213,8 @@ def plot_orbits(orbit_paths: np.ndarray, fig_name: str = None):
     :param fig_name: if string provided, png of plot will be saved as name given
     :return:
     """
-
     logger.info("Plotting orbits")
-    plt.figure(figsize=(10, 10))
+    plt.figure(figsize=(6, 6))
 
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])

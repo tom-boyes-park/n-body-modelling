@@ -3,7 +3,6 @@ from typing import Type
 
 import pytest
 
-from src.config import Orbit, YING_YANG_2B, TWO_LIGHT_ONE_MASSIVE
 from src.main import validate_args
 
 
