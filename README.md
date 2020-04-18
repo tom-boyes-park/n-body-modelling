@@ -49,12 +49,18 @@ Clone this repository.
 git clone https://github.com/TBoyesPark23/n-body-modelling.git
 ```
 
+List available orbit configurations that can be plotted:
+```commandline
+python src/main.py --list-orbits
+```
+
 Plot orbits for one of the default orbit configurations:
 ```commandline
 python src/main.py --orbit TWO_LIGHT_ONE_MASSIVE
 ```
 
-List available orbit configurations that can be plotted:
+Animate orbits for one of the default orbit configurations:
 ```commandline
-python src/main.py --list-orbits
+python src/main.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
 ```
+
