@@ -57,6 +57,11 @@ def _list_orbits():
 def validate_args(args: argparse.Namespace):
     """
     Validates values passed via command line
+
+    Args:
+        args: command line args and values
+
+    Raises: ValueError
     """
     orbit = args.orbit
     if orbit and (orbit not in DEFAULT_ORBITS.keys()):
@@ -73,7 +78,8 @@ def validate_args(args: argparse.Namespace):
 
 def get_orbit(orbit: str) -> Orbit:
     """
-    Return Orbit with name of orbit supplied.
+    Args:
+        orbit: str orbit name
 
     Returns: Orbit
     """
