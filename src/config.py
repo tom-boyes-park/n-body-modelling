@@ -28,9 +28,27 @@ class Body:
 class Orbit:
     """ Class used to store necessary information for n body orbit configurations. """
 
-    def __init__(self, name: str, bodies: List[Body], t: int, ascii_name: str = None):
+    def __init__(
+        self,
+        name: str,
+        bodies: List[Body],
+        t: int,
+        dt: int = 1000,
+        ascii_name: str = None,
+    ):
+        """
+        Construct an Orbit configuration.
+
+        Args:
+            name: Name of the orbit
+            bodies: List[Body]
+            t: time period over which to calculate orbit paths
+            dt: time step to use in integration
+            ascii_name:
+        """
         self.name = name
         self.t = t
+        self.dt = dt
         self.ascii_name = ascii_name
 
         if len(bodies) < 2:
@@ -51,6 +69,7 @@ BROUCKE_A_2 = Orbit(
         Body(x=-1.1061194753, y=0.0, vx=0.0, vy=-0.9036964391, mass=1, name="Body 3",),
     ],
     t=8,
+    dt=1000,
     ascii_name="""
     .______   .______       ______    __    __    ______  __  ___  _______         ___          ___   
     |   _  \  |   _  \     /  __  \  |  |  |  |  /      ||  |/  / |   ____|       /   \        |__ \  
@@ -69,6 +88,7 @@ BUTTERFLY_IV = Orbit(
         Body(x=0, y=0, vx=-2 * 0.350112, vy=-2 * 0.079339, mass=1, name="Body 1"),
     ],
     t=80,
+    dt=10000,
     ascii_name="""
     .______    __    __  .___________.___________._______ .______      _______  __      ____    ____     __  ____    ____ 
     |   _  \  |  |  |  | |           |           |   ____||   _  \    |   ____||  |     \   \  /   /    |  | \   \  /   / 
@@ -86,7 +106,8 @@ DRAGONFLY_II_15_A = Orbit(
         Body(x=1, y=0, vx=0.049051, vy=0.590194, mass=1, name="Body 1"),
         Body(x=0, y=0, vx=-2 * 0.049051, vy=-2 * 0.590194, mass=1, name="Body 1"),
     ],
-    t=22,
+    t=60,
+    dt=5000,
     ascii_name="""
      _______  .______          ___       _______   ______   .__   __.  _______  __      ____    ____     __   __      __   _____          ___      
     |       \ |   _  \        /   \     /  _____| /  __  \  |  \ |  | |   ____||  |     \   \  /   /    |  | |  |    /_ | | ____|        /   \     
@@ -104,7 +125,7 @@ TWO_LIGHT_ONE_MASSIVE = Orbit(
         Body(x=0, y=0, vx=0, vy=0, mass=3000, name="Massive Body"),
         Body(x=50, y=0, vx=0, vy=10, mass=50, name="Light Body 2"),
     ],
-    t=200,
+    t=204,
     ascii_name="""
      ___       __       __    _______  __    __  .___________.    __     .___  ___.      ___           _______.     _______. __  ____    ____  _______ 
     |__ \     |  |     |  |  /  _____||  |  |  | |           |   /_ |    |   \/   |     /   \         /       |    /       ||  | \   \  /   / |   ____|
@@ -123,6 +144,7 @@ YING_YANG_2B = Orbit(
         Body(x=0, y=0, vx=-2 * 0.417343, vy=-2 * 0.313100, mass=1, name="Body 1"),
     ],
     t=55,
+    dt=10000,
     ascii_name="""
     ____    ____  __  .__   __.   _______    ____    ____  ___      .__   __.   _______     ___   .______   
     \   \  /   / |  | |  \ |  |  /  _____|   \   \  /   / /   \     |  \ |  |  /  _____|   |__ \  |   _  \  

@@ -25,7 +25,7 @@ def run():
     orbit = get_orbit(args.orbit)
     logger.info(f"Orbit selected:\n{orbit.ascii_name}\n")
 
-    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=1000)
+    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=orbit.dt)
 
     if args.animate:
         animate_orbits(orbits)
