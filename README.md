@@ -14,13 +14,13 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
   </tr>
   <tr>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/3_body_chaos.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/3_body_chaos.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/orbits_2light_1massive.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/orbits_2light_1massive.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/Broucke_A_2.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/Broucke_A_2.png">
     </td>
   </tr>
   <tr>
@@ -30,13 +30,13 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
   </tr>
   <tr>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/YIN-YANG 2b.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/YIN-YANG 2b.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/BUTTERFLY IV.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/BUTTERFLY IV.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/src/plots/II.15.A.png">
+      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/II.15.A.png">
     </td>
   </tr>
 </table>
