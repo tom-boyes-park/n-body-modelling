@@ -45,7 +45,7 @@ def run():
     if args.animate:
         animate_orbits(orbits)
     else:
-        plot_orbits(orbits)
+        plot_orbits(orbits, title=orbit.name)
 
 
 if __name__ == "__main__":

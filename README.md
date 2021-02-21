@@ -1,9 +1,39 @@
 # Gravitational N Body Modelling 2D
 Repository for the development of gravitational N body modelling calculations and visualisations.
 
-The code in this repository allows you to experiment with different initial starting conditions (x, y, v<sub>x</sub> and v<sub>y</sub>) for N bodies and explore the orbits they follow.
+This repo can be used to run a web app to explore the orbits of various pre-defined N body configurations (x, y, v<sub>x</sub>, v<sub>y</sub> and mass). Orbit paths can also be plotted or animated using command line runner.
 
-The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html) in order to calculate the change in x, y, v<sub>x</sub> and v<sub>y</sub> at a given time step due to the gravitational forces of all other bodies in the system. The integrator used is ````dopri835````.
+The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html) in order to calculate the change in x, y, v<sub>x</sub> and v<sub>y</sub> at each given time step due to the gravitational forces of all other bodies in the system. The integrator used is ````dopri835````.
+
+## How To Use
+Clone this repository.
+```commandline
+git clone https://github.com/TBoyesPark23/n-body-modelling.git
+```
+
+### Web app
+
+Run the web app using streamlit (https://www.streamlit.io/)
+```commandline
+streamlit run app.py
+```
+
+### Command line
+
+Plot orbits for one of the default orbit configurations:
+```commandline
+python run.py --orbit TWO_LIGHT_ONE_MASSIVE
+```
+
+Animate orbits for one of the default orbit configurations:
+```commandline
+python run.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
+```
+
+## Roadmap
+
+- Update web app to display animations of the orbit path
+- Update web app to allow for custom N body configurations
 
 ## Example Orbits
 <table>
@@ -42,20 +72,3 @@ The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/s
 </table>
 
 [1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: <i>M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.</i>
-
-## How To Use
-Clone this repository.
-```commandline
-git clone https://github.com/TBoyesPark23/n-body-modelling.git
-```
-
-Plot orbits for one of the default orbit configurations:
-```commandline
-python run.py --orbit TWO_LIGHT_ONE_MASSIVE
-```
-
-Animate orbits for one of the default orbit configurations:
-```commandline
-python run.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
-```
-

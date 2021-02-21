@@ -3,6 +3,7 @@ from typing import List
 
 import matplotlib.pyplot as plt
 import numpy as np
+import streamlit as st
 from matplotlib.animation import FuncAnimation
 from scipy import integrate
 
@@ -147,9 +148,15 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
 
     # Iterate over time intervals and integrate, storing updated spatial coordinates
     # and velocities of bodies
+    progress_text = st.sidebar.text(f"Iteration: 0/{len(t)}")
+    progress_bar = st.sidebar.progress(0)
     logger.info("Calculating orbits")
     for i in range(1, len(t)):
+        progress_text.text(f"Iteration: {i}/{len(t)-1}")
+        progress_bar.progress((i + 1) / len(t))
         y[i, :] = integrator.integrate(t[i])
+
+    progress_text.text("Complete!")
 
     return y
 
@@ -215,17 +222,21 @@ def animate_orbits(orbit_paths: np.ndarray) -> None:
     plt.show()
 
 
-def plot_orbits(orbit_paths: np.ndarray) -> None:
+def plot_orbits(orbit_paths: np.ndarray, title: str) -> None:
     """
     Plots the orbits
 
     Args:
         orbit_paths: array containing spatial and velocity values over time
+        title: title to use for figure
     """
     logger.info("Plotting orbits")
-    plt.figure(figsize=(6, 6))
+    fig = plt.figure(figsize=(10, 10))
+    plt.title(title)
 
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
+
+    st.pyplot(fig)
 
     plt.show()
