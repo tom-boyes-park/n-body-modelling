@@ -40,7 +40,7 @@ def run():
     logger.info(f"Running with followings args: {args}")
 
     orbit = DEFAULT_ORBITS[args.orbit]
-    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=1000)
+    orbits = calc_orbits(bodies=orbit.bodies, t0=0, t1=orbit.t, dt=orbit.dt)
 
     if args.animate:
         animate_orbits(orbits)
