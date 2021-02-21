@@ -222,7 +222,7 @@ def animate_orbits(orbit_paths: np.ndarray) -> None:
     plt.show()
 
 
-def plot_orbits(orbit_paths: np.ndarray, title: str = None) -> None:
+def plot_orbits(orbit_paths: np.ndarray, title: str) -> None:
     """
     Plots the orbits
 
@@ -232,9 +232,7 @@ def plot_orbits(orbit_paths: np.ndarray, title: str = None) -> None:
     """
     logger.info("Plotting orbits")
     fig = plt.figure(figsize=(10, 10))
-
-    if title is not None:
-        plt.title(title)
+    plt.title(title)
 
     for i in range(int(orbit_paths.shape[1] / 4)):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
