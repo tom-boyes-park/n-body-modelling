@@ -15,6 +15,7 @@ Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 1
 
 from utils.objects import Body, Orbit
 
+# TODO: these could be in an Enum
 BROUCKE_A_2 = Orbit(
     name="BROUCKE_A_2",
     bodies=[
