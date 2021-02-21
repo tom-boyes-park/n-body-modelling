@@ -11,7 +11,7 @@ Clone this repository.
 git clone https://github.com/TBoyesPark23/n-body-modelling.git
 ```
 
-### Web-app
+### Web app
 
 Run the web app using streamlit (https://www.streamlit.io/)
 ```commandline
