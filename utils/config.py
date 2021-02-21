@@ -12,55 +12,10 @@ were taken from: http://three-body.ipb.ac.rs/. Paper: M. ≈†uvakov and V. Dmitra≈
 Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110,
 114301 (2013). arXiv:1303.0181.
 """
-from typing import List
 
+from utils.objects import Body, Orbit
 
-class Body:
-    def __init__(self, x, vx, y, vy, mass, name):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.mass = mass
-        self.name = name
-
-
-class Orbit:
-    """ Class used to store necessary information for n body orbit configurations. """
-
-    def __init__(
-        self,
-        name: str,
-        bodies: List[Body],
-        t: int,
-        dt: int = 1000,
-        ascii_name: str = None,
-    ):
-        """
-        Construct an Orbit configuration.
-
-        Args:
-            name: Name of the orbit
-            bodies: List[Body]
-            t: time period over which to calculate orbit paths
-            dt: time step to use in integration
-            ascii_name:
-        """
-        self.name = name
-        self.t = t
-        self.dt = dt
-        self.ascii_name = ascii_name
-
-        if len(bodies) < 2:
-            raise ValueError(
-                f"Orbit configuration requires at least 2 bodies, "
-                f"{len(bodies)} supplied"
-            )
-        else:
-            self.bodies = bodies
-
-
-# TODO: set dt in the Orbit configuration also
+# TODO: these could be in an Enum
 BROUCKE_A_2 = Orbit(
     name="BROUCKE_A_2",
     bodies=[
@@ -126,6 +81,7 @@ TWO_LIGHT_ONE_MASSIVE = Orbit(
         Body(x=50, y=0, vx=0, vy=10, mass=50, name="Light Body 2"),
     ],
     t=204,
+    dt=1000,
     ascii_name="""
      ___       __       __    _______  __    __  .___________.    __     .___  ___.      ___           _______.     _______. __  ____    ____  _______ 
     |__ \     |  |     |  |  /  _____||  |  |  | |           |   /_ |    |   \/   |     /   \         /       |    /       ||  | \   \  /   / |   ____|
@@ -154,3 +110,14 @@ YING_YANG_2B = Orbit(
         |__|     |__| |__| \__|  \______|        |__| /__/     \__\ |__| \__|  \______|    |____| |______/  
     """,
 )
+
+DEFAULT_ORBITS = {
+    o.name: o
+    for o in [
+        BROUCKE_A_2,
+        BUTTERFLY_IV,
+        DRAGONFLY_II_15_A,
+        TWO_LIGHT_ONE_MASSIVE,
+        YING_YANG_2B,
+    ]
+}

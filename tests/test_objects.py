@@ -1,13 +1,11 @@
-from typing import List, Type
-
 import pytest
-from _pytest.compat import nullcontext
+from contextlib import nullcontext as DoesNotRaise
 
-from src.config import Body, Orbit
+from utils.objects import Body, Orbit
 
 
 @pytest.mark.parametrize(
-    argnames=["name", "bodies", "t", "exception"],
+    argnames=["name", "bodies", "t", "dt", "exception"],
     argvalues=[
         (
             "VALID_ORBIT",
@@ -16,20 +14,20 @@ from src.config import Body, Orbit
                 Body(x=1, vx=1, y=1, vy=1, mass=1, name="body_2"),
             ],
             10,
-            None,
+            1000,
+            DoesNotRaise(),
         ),
-        ("INVALID_ORBIT", [], 10, ValueError),
+        ("INVALID_ORBIT", [], 10, 1500, pytest.raises(ValueError)),
         (
             "INVALID_ORBIT",
             [Body(x=0, vx=0, y=0, vy=0, mass=1, name="body_1")],
             10,
-            ValueError,
+            10000,
+            pytest.raises(ValueError),
         ),
     ],
 )
-def test_orbit_constructor(
-    name: str, bodies: List[Body], t: int, exception: Type[BaseException]
-):
+def test_orbit_constructor(name, bodies, t, dt, exception):
     """ Tests that Orbit constructor raises ValueError if not enough bodies supplied """
-    with pytest.raises(exception) if exception else nullcontext():
-        Orbit(name=name, bodies=bodies, t=t)
+    with exception:
+        Orbit(name=name, bodies=bodies, t=t, dt=dt)

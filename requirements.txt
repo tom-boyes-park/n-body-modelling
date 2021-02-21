@@ -1,6 +1,5 @@
-pandas==0.25.3
-numpy==1.17.4
 matplotlib==2.1.2
-
-scipy
-pytest
+numpy==1.17.4
+pandas==0.25.3
+pytest==5.3.0
+scipy==1.4.0

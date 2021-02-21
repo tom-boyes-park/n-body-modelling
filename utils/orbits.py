@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 import matplotlib.pyplot as plt
@@ -5,9 +6,7 @@ import numpy as np
 from matplotlib.animation import FuncAnimation
 from scipy import integrate
 
-import logging
-
-from src.config import Body
+from utils.objects import Body
 
 logger = logging.getLogger(__name__)
 
@@ -109,14 +108,19 @@ def n_body_func(t: int, pos_vel: np.ndarray, bodies: List[Body]) -> np.ndarray:
 
 def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     """
+    Calculate the change in x, y, vx and vy at each time step between t0 and t1 due to
+    the gravitational forces of all other bodies in the system. The integrator used is
+    dopri835.
 
-    :param bodies: List of Body classes that describe the starting conditions and
+    Args:
+        bodies: List of Body classes that describe the starting conditions and
         masses of the bodies
-    bodies due to the gravitational forces from other bodies at each time step
-    :param t0: Start time
-    :param t1: End time
-    :param dt: Time step (seconds)
-    :return: Array containing spatial coordinates and velocities of bodies at each
+        t0: start time
+        t1: end time
+        dt: time step (seconds)
+
+    Returns:
+        Array containing spatial coordinates and velocities of bodies at each
         time step
     """
     logger.info(
@@ -150,8 +154,10 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     return y
 
 
-def animate_orbits(orbit_paths: np.ndarray):
+def animate_orbits(orbit_paths: np.ndarray) -> None:
     """
+    Animates the orbits
+
     Args:
         orbit_paths: array containing spatial and velocity values over time
     """
@@ -209,12 +215,12 @@ def animate_orbits(orbit_paths: np.ndarray):
     plt.show()
 
 
-def plot_orbits(orbit_paths: np.ndarray, fig_name: str = None):
+def plot_orbits(orbit_paths: np.ndarray) -> None:
     """
+    Plots the orbits
 
-    :param orbit_paths: array containing spatial and velocity values over time
-    :param fig_name: if string provided, png of plot will be saved as name given
-    :return:
+    Args:
+        orbit_paths: array containing spatial and velocity values over time
     """
     logger.info("Plotting orbits")
     plt.figure(figsize=(6, 6))
@@ -223,6 +229,3 @@ def plot_orbits(orbit_paths: np.ndarray, fig_name: str = None):
         plt.plot(orbit_paths[:, i * 4], orbit_paths[:, i * 4 + 2])
 
     plt.show()
-
-    if fig_name is not None:
-        plt.savefig("src/plots/{}.png".format(fig_name))
