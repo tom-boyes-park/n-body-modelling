@@ -13,7 +13,6 @@ Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 1
 114301 (2013). arXiv:1303.0181.
 """
 
-# TODO: set dt in the Orbit configuration also
 from utils.objects import Body, Orbit
 
 BROUCKE_A_2 = Orbit(
