@@ -2,8 +2,8 @@ from typing import List
 
 import pytest
 
-from src.config import Body
-from src.orbits import create_initial_conditions, calc_2d_distance, calc_dvel
+from utils.objects import Body
+from utils.orbits import calc_2d_distance, calc_dvel, create_initial_conditions
 
 
 @pytest.mark.parametrize(

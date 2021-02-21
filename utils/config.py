@@ -12,37 +12,10 @@ were taken from: http://three-body.ipb.ac.rs/. Paper: M. ≈†uvakov and V. Dmitra≈
 Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110,
 114301 (2013). arXiv:1303.0181.
 """
-from typing import List
-
-
-class Body:
-    def __init__(self, x, vx, y, vy, mass, name):
-        self.x = x
-        self.y = y
-        self.vx = vx
-        self.vy = vy
-        self.mass = mass
-        self.name = name
-
-
-class Orbit:
-    """ Class used to store necessary information for n body orbit configurations. """
-
-    def __init__(self, name: str, bodies: List[Body], t: int, ascii_name: str = None):
-        self.name = name
-        self.t = t
-        self.ascii_name = ascii_name
-
-        if len(bodies) < 2:
-            raise ValueError(
-                f"Orbit configuration requires at least 2 bodies, "
-                f"{len(bodies)} supplied"
-            )
-        else:
-            self.bodies = bodies
-
 
 # TODO: set dt in the Orbit configuration also
+from utils.objects import Body, Orbit
+
 BROUCKE_A_2 = Orbit(
     name="BROUCKE_A_2",
     bodies=[
@@ -132,3 +105,14 @@ YING_YANG_2B = Orbit(
         |__|     |__| |__| \__|  \______|        |__| /__/     \__\ |__| \__|  \______|    |____| |______/  
     """,
 )
+
+DEFAULT_ORBITS = {
+    o.name: o
+    for o in [
+        BROUCKE_A_2,
+        BUTTERFLY_IV,
+        DRAGONFLY_II_15_A,
+        TWO_LIGHT_ONE_MASSIVE,
+        YING_YANG_2B,
+    ]
+}
