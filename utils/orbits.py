@@ -123,6 +123,9 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
         Array containing spatial coordinates and velocities of bodies at each
         time step
     """
+    logger.info(
+        f"""Orbit settings: n_bodies: {len(bodies)}, t0: {t0}, t1: {t1}, dt: {dt}"""
+    )
 
     # Initial conditions (x, vx, y, vy)
     initial = create_initial_conditions(bodies=bodies)
