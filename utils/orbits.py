@@ -153,7 +153,7 @@ def calc_orbits(bodies: List[Body], t0: int, t1: int, dt: int) -> np.ndarray:
     logger.info("Calculating orbits")
     for i in range(1, len(t)):
         progress_text.text(f"Iteration: {i}/{len(t)-1}")
-        progress_bar.progress((i+1)/len(t))
+        progress_bar.progress((i + 1) / len(t))
         y[i, :] = integrator.integrate(t[i])
 
     progress_text.text("Complete!")
