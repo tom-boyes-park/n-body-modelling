@@ -1,24 +1,19 @@
 # Gravitational N Body Modelling 2D
 Repository for the development of gravitational N body modelling calculations and visualisations.
 
-This repo can be used to run a web app to explore the orbits of various pre-defined N body configurations (x, y, v<sub>x</sub>, v<sub>y</sub> and mass). Orbit paths can also be plotted or animated using command line runner.
+This repo can be used to run a web app to explore the orbits of various pre-defined N body configurations
+(x, y, v<sub>x</sub>, v<sub>y</sub> and mass). Orbit paths can also be plotted or animated using the CLI.
 
-The code makes use of [````scipy.integrate.ode````](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html) in order to calculate the change in x, y, v<sub>x</sub> and v<sub>y</sub> at each given time step due to the gravitational forces of all other bodies in the system. The integrator used is ````dopri835````.
+The code makes use of [`scipy.integrate.ode`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.integrate.ode.html) in order to calculate the change in x, y, v<sub>x</sub> and v<sub>y</sub> at each given time step due to the gravitational forces of all other bodies in the system. The integrator used is `dopri835`.
 
-## How To Use
-Clone this repository.
+## Running Locally
+
+Install requirements:
 ```commandline
-git clone https://github.com/TBoyesPark23/n-body-modelling.git
+pip install -r requirements.txt
 ```
 
-### Web app
-
-Run the web app using streamlit (https://www.streamlit.io/)
-```commandline
-streamlit run app.py
-```
-
-### Command line
+### CLI
 
 Plot orbits for one of the default orbit configurations:
 ```commandline
@@ -28,6 +23,13 @@ python run.py --orbit TWO_LIGHT_ONE_MASSIVE
 Animate orbits for one of the default orbit configurations:
 ```commandline
 python run.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
+```
+
+### Web App
+
+Run the web app using streamlit (https://www.streamlit.io/)
+```commandline
+streamlit run app.py
 ```
 
 ## Roadmap
@@ -44,13 +46,13 @@ python run.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
   </tr>
   <tr>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/3_body_chaos.png">
+      <img src="./plots/3_body_chaos.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/orbits_2light_1massive.png">
+      <img src="./plots/orbits_2light_1massive.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/Broucke_A_2.png">
+      <img src="./plots/Broucke_A_2.png">
     </td>
   </tr>
   <tr>
@@ -60,15 +62,16 @@ python run.py --orbit TWO_LIGHT_ONE_MASSIVE --animate
   </tr>
   <tr>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/YIN-YANG 2b.png">
+      <img src="./plots/YIN-YANG 2b.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/BUTTERFLY IV.png">
+      <img src="./plots/BUTTERFLY IV.png">
     </td>
     <td>
-      <img src="https://github.com/TBoyesPark23/n-body-modelling/blob/master/plots/II.15.A.png">
+      <img src="./plots/II.15.A.png">
     </td>
   </tr>
 </table>
 
-[1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: <i>M. Šuvakov and V. Dmitrašinović, Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.</i>
+[1] Initial starting conditions taken from http://three-body.ipb.ac.rs/. Paper: <i>M. Šuvakov and V. Dmitrašinović,
+Three Classes of Newtonian Three-Body Planar Periodic Orbits, Phys. Rev. Lett. 110, 114301 (2013). arXiv:1303.0181.</i>
